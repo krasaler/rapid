@@ -58,8 +58,8 @@ export default class Loader {
     return output;
   }
 
-  public config(route: string) {
-    this.registry.get("config").load(route);
+  public async config(route: string) {
+    return await this.registry.get("config").load(route);
   }
 
   public language(route: string) {

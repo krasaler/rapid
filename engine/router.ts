@@ -18,7 +18,7 @@ import {
   config as rapinConfig,
 } from "../common.ts";
 import Cache from "../library/cache.ts";
-// import Config from '../library/config.ts'
+import Config from '../library/config.ts'
 // import Crypto from '../library/crypto.ts'
 import Error from "../library/error.ts";
 // import Image from '../library/image.ts'
@@ -143,7 +143,7 @@ export default class Router {
     this.registry.set('language', new Language())
     // this.registry.set('file', new File())
     // this.registry.set('crypto', new Crypto())
-    // this.registry.set('config', new Config())
+    this.registry.set('config', new Config())
     // this.registry.set('image', new Image())
     // this.registry.set('pagination', new Pagination())
     // this.registry.set('axios', axios)

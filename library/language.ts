@@ -1,7 +1,7 @@
 import * as fs from "https://deno.land/std/fs/mod.ts";
 import isUndefined from "https://deno.land/x/lodash/isUndefined.js";
 import toString from "https://deno.land/x/lodash/toString.js";
-import { DIR_APPLICATION, DIR_STORAGE } from "../common.ts";
+import { DIR_APPLICATION } from "../common.ts";
 
 export default class Language {
   public directory: string;
@@ -23,7 +23,7 @@ export default class Language {
     return this.data;
   }
 
-  public async load(filename: string) {
+  public load(filename: string) {
     const filepath = DIR_APPLICATION + "catalog/language/" + this.directory + "/" + filename +
       ".json";
 

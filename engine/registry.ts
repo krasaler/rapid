@@ -8,7 +8,7 @@ export default class Registry {
     return this.data[name];
   }
 
-  public getAll() {
+  public getAll(): any {
     return this.data;
   }
 

@@ -1,4 +1,5 @@
 import Registry from "./registry.ts";
+import {Context} from '../typing/index.ts'
 
 export class Controller {
   protected registry: Registry;
@@ -7,7 +8,7 @@ export class Controller {
     this.registry = registry;
   }
 
-  protected get $context() {
+  protected get $context(): Context {
     return this.registry.getAll();
   }
 }
