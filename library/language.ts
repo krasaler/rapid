@@ -1,19 +1,21 @@
-import * as fs from "fs";
-import { isUndefined } from "lodash";
+import * as fs from "https://deno.land/std/fs/mod.ts";
+import isUndefined from "https://deno.land/x/lodash/isUndefined.js";
+import toString from "https://deno.land/x/lodash/toString.js";
+import { DIR_APPLICATION, DIR_STORAGE } from "../common.ts";
 
 export default class Language {
   public directory: string;
-  public data: object;
+  public data: any;
   constructor(directory = "en-gb") {
     this.directory = directory;
     this.data = {};
   }
 
-  public get(key) {
+  public get(key: string) {
     return !isUndefined(this.data[key]) ? this.data[key] : key;
   }
 
-  public set(key, value) {
+  public set(key: string, value: any) {
     this.data[key] = value;
   }
 
@@ -21,14 +23,16 @@ export default class Language {
     return this.data;
   }
 
-  public load(filename) {
-    const filepath = "src/language/" + this.directory + "/" + filename +
+  public async load(filename: string) {
+    const filepath = DIR_APPLICATION + "catalog/language/" + this.directory + "/" + filename +
       ".json";
 
     let data = {};
 
-    if (fs.existsSync(filepath) && fs.lstatSync(filepath).isFile()) {
-      data = require("language/" + this.directory + "/" + filename);
+    if (fs.existsSync(filepath) && Deno.lstatSync(filepath).isFile) {
+      const content = fs.readFileStrSync(filepath);
+
+      data = JSON.parse(toString(content));
     }
 
     this.data = { ...this.data, ...data };

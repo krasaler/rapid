@@ -22,7 +22,7 @@ import Cache from "../library/cache.ts";
 // import Crypto from '../library/crypto.ts'
 import Error from "../library/error.ts";
 // import Image from '../library/image.ts'
-// import Language from '../library/language.ts'
+import Language from '../library/language.ts'
 import Log from "../library/log.ts";
 import Request from "../library/request.ts";
 import Response from "../library/response.ts";
@@ -140,7 +140,7 @@ export default class Router {
 
   private async initRegistry() {
     initHelpers(this.registry);
-    // this.registry.set('language', new Language())
+    this.registry.set('language', new Language())
     // this.registry.set('file', new File())
     // this.registry.set('crypto', new Crypto())
     // this.registry.set('config', new Config())

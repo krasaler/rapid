@@ -27,7 +27,7 @@ const { storage } = rapinConfig;
 export let isDev = NODE_ENV === "development";
 export let config: any = { ...rapinConfigDefault, ...rapinConfig };
 
-export let DIR_APPLICATION: string = path.resolve(__dirname, "");
+export let DIR_APPLICATION: string = Deno.cwd() + '/';
 export let DIR_IMAGE: string = path.resolve("", "./static/images/");
 export let DIR_STORAGE: string = storage || Deno.cwd() + "/storage/";
 export let DIR_STATIC: string = path.resolve("", "./static/");
