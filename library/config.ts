@@ -1,6 +1,5 @@
 import * as fs from "https://deno.land/std/fs/mod.ts";
 import isUndefined from "https://deno.land/x/lodash/isUndefined.js";
-import toString from "https://deno.land/x/lodash/toString.js";
 import { DIR_APPLICATION } from "../common.ts";
 import { pathToUri } from "../pathToUri.ts";
 

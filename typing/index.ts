@@ -6,6 +6,9 @@ import Language from '../library/language.ts'
 import Log from '../library/log.ts'
 import Request from '../library/request.ts'
 import Response from '../library/response.ts'
+import Pagination from '../library/pagination.ts'
+import Crypto from '../library/crypto.ts'
+import Mail from '../library/mail.ts'
 
 export declare class Registry {
   constructor(data?: any)
@@ -15,7 +18,7 @@ export declare class Registry {
   has(name: string): boolean
 }
 
-export interface Context {
+export declare interface Context {
   // axios: AxiosInstance
   /**
    * For work with styles, links and scripts
@@ -36,7 +39,7 @@ export interface Context {
   /**
    * Class for provides cryptographic functionality
    */
-  // crypto: Crypto
+  crypto: Crypto
   /**
    * Class for working with errors
    */
@@ -60,11 +63,11 @@ export interface Context {
   /**
    * Class for sending mail through the package "nodemailer"
    */
-  // mail: Mail
+  mail: Mail
   /**
    * Class for creating pagination from the list of item
    */
-  // pagination: Pagination<any>
+  pagination: Pagination<any>
   /**
    * Class for retrieving request data
    */

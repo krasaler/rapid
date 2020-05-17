@@ -19,15 +19,15 @@ import {
 } from "../common.ts";
 import Cache from "../library/cache.ts";
 import Config from '../library/config.ts'
-// import Crypto from '../library/crypto.ts'
+import Crypto from '../library/crypto.ts'
 import Error from "../library/error.ts";
 // import Image from '../library/image.ts'
 import Language from '../library/language.ts'
 import Log from "../library/log.ts";
 import Request from "../library/request.ts";
 import Response from "../library/response.ts";
-// import Pagination from '../library/pagination.ts'
-// import Mail from '../library/mail.ts'
+import Pagination from '../library/pagination.ts'
+import Mail from '../library/mail.ts'
 // import Style from '../library/style.ts'
 import Action from "./action.ts";
 import Loader from "./loader.ts";
@@ -142,12 +142,12 @@ export default class Router {
     initHelpers(this.registry);
     this.registry.set('language', new Language())
     // this.registry.set('file', new File())
-    // this.registry.set('crypto', new Crypto())
+    this.registry.set('crypto', new Crypto())
     this.registry.set('config', new Config())
     // this.registry.set('image', new Image())
-    // this.registry.set('pagination', new Pagination())
+    this.registry.set('pagination', new Pagination())
     // this.registry.set('axios', axios)
-    // this.registry.set('mail', new Mail())
+    this.registry.set('mail', new Mail())
     // this.registry.set('style', new Style())
 
     this.registry.set("log", new Log());

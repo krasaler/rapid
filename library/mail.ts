@@ -1,92 +1,79 @@
-import { createTransport } from "nodemailer";
-import { config } from "../common";
+import { SmtpClient } from "https://deno.land/x/smtp/mod.ts";
+import * as nodemailer from "https://raw.githubusercontent.com/nodemailer/nodemailer/master/lib/nodemailer.js"
+import { config } from "../common.ts";
 export default class Mail {
-  protected to: string;
-  protected from: string;
-  protected sender: string;
-  protected reply_to: string;
-  protected subject: string;
-  protected bcc: string;
-  protected cc: string;
-  protected text: string;
-  protected html: string;
+  protected to: string = '';
+  protected from: string = '';
+  protected sender: string = '';
+  protected subject: string = '';
+  protected html: string = '';
 
-  protected mailService: string;
-  protected mailUser: string;
-  protected mailPassword: string;
+  protected mailPort: number = 25;
+  protected mailHost: string = '';
+  protected mailTls: boolean = false;
+  protected mailUser: string = '';
+  protected mailPassword: string = '';
 
   constructor() {
-    this.mailService = config.mail.service;
+    this.mailPort = config.mail.port;
+    this.mailHost = config.mail.host;
+    this.mailTls = config.mail.tls;
     this.mailUser = config.mail.user;
     this.mailPassword = config.mail.password;
   }
 
-  public setTo(to) {
+  public setTo(to: string) {
     this.to = to;
   }
 
-  public setFrom(from) {
+  public setFrom(from: string) {
     this.from = from;
   }
 
-  public setBcc(bcc) {
-    this.bcc = bcc;
-  }
-
-  public setCC(cc) {
-    this.cc = cc;
-  }
-
-  public setSender(sender) {
+  public setSender(sender: string) {
     this.sender = sender;
   }
 
-  public setReplyTo(reply_to) {
-    this.reply_to = reply_to;
-  }
-
-  public setSubject(subject) {
+  public setSubject(subject: string) {
     this.subject = subject;
   }
 
-  public setText(text) {
-    this.text = text;
-  }
-
-  public setHtml(html) {
+  public setHtml(html: string) {
     this.html = html;
   }
 
-  public send(auth = {}) {
-    const transporter = createTransport({
-      service: this.mailService,
-      auth: {
-        user: this.mailUser,
-        pass: this.mailPassword,
-        ...auth,
-      },
-    });
+  public async send(auth = {}): Promise<string> {
+    const client = new SmtpClient();
+
+    if(this.mailTls) {    
+      await client.connectTLS({
+        hostname: this.mailHost,
+        port: this.mailPort,
+        username: this.mailUser,
+        password: this.mailPassword,
+        ...auth
+      });
+    } else {
+      await client.connect({
+        hostname: this.mailHost,
+        port: this.mailPort,
+        username: this.mailUser,
+        password: this.mailPassword,
+        ...auth
+      });
+    }
+    
 
     const mailOptions: any = {
       from: this.from,
       to: this.to,
-      bcc: this.bcc,
-      cc: this.cc,
       subject: this.subject,
-      text: this.text,
-      html: this.html,
+      content: this.html,
     };
 
-    if (this.reply_to) {
-      mailOptions.replyTo = this.reply_to;
-    }
-
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-      console.log("Message sent: " + info.response);
-    });
-    this.bcc = "";
+    await client.send(mailOptions);
+    await client.close()
+    return 'Mail Sent'
+    
   }
 }

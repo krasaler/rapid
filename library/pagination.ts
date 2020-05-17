@@ -1,17 +1,18 @@
-import { size, toNumber } from "lodash";
+import toNumber from "https://deno.land/x/lodash/toNumber.js";
+import size from "https://deno.land/x/lodash/size.js";
 
-export default class Pagination {
-  private total: number;
-  private limit: number;
-  private items: any;
-  private sortBy: string;
-  private sortDirection: string;
+export default class Pagination<T> {
+  private total: number = 0;
+  private limit: number = 0;
+  private items: T[] = [];
+  private sortBy: string = '';
+  private sortDirection: string = 'ASC';
 
   constructor() {
   }
 
   public init(
-    items: Array<any>,
+    items: Array<T>,
     sortBy: string,
     sortDirection: string,
     total: number,
