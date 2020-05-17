@@ -9,14 +9,15 @@ export default class Cache {
   public async init() {
     const { engine, expire } = config.cache;
     const __dirname = path.dirname(import.meta.url.replace("file:///", ""));
-    const filePath = __dirname + "/cache/" + engine + ".ts";
+    let filePath = __dirname + "/cache/" + engine + ".ts";
     console.log(filePath)
     console.log(pathToUri(filePath))
     try {
-    // if (fs.existsSync(filePath)) {
-      const driverClass = await import(pathToUri(filePath));
+      if(filePath.indexOf('http')===-1) {
+        filePath = pathToUri(filePath)
+      }
+      const driverClass = await import(filePath);
       this.cache = new driverClass.default(expire);
-    // }
     } catch(e) {
       console.log(e)
     }
