@@ -11,10 +11,14 @@ export default class Cache {
     const __dirname = path.dirname(import.meta.url.replace("file:///", ""));
     const filePath = __dirname + "/cache/" + engine + ".ts";
     console.log(filePath)
+    try {
     // if (fs.existsSync(filePath)) {
-    //   const driverClass = await import(pathToUri(filePath));
-    //   this.cache = new driverClass.default(expire);
+      const driverClass = await import(pathToUri(filePath));
+      this.cache = new driverClass.default(expire);
     // }
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   public get(key: string) {
