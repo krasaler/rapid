@@ -172,44 +172,48 @@ export default class Router {
   }
 
   private async preRequest(ctx: Context, next: () => Promise<void>) {
-    console.log('preRequest')
-    this.registry.set("error", new Error());
+    console.log("preRequest");
+    try {
+      this.registry.set("error", new Error());
 
-    const result = await ctx.request.body();
-    this.registry.set(
-      "request",
-      new Request({
-        ...ctx.request,
-        postData: result.value,
-        query: this.parseQuery(ctx.request.url.search),
-        cookie: ctx.cookies,
-        //     session: ctx.session
-      }),
-    );
-    const cache = new Cache();
-    await cache.init();
-    this.registry.set("cache", cache);
+      const result = await ctx.request.body();
+      this.registry.set(
+        "request",
+        new Request({
+          ...ctx.request,
+          postData: result.value,
+          query: this.parseQuery(ctx.request.url.search),
+          cookie: ctx.cookies,
+          //     session: ctx.session
+        }),
+      );
+      const cache = new Cache();
+      await cache.init();
+      this.registry.set("cache", cache);
 
-    this.registry.set(
-      "request",
-      new Request({
-        ...ctx.request,
-        postData: result.value,
-        query: this.parseQuery(ctx.request.url.search),
-        cookie: ctx.cookies,
-        //     session: ctx.session
-      }),
-    );
+      this.registry.set(
+        "request",
+        new Request({
+          ...ctx.request,
+          postData: result.value,
+          query: this.parseQuery(ctx.request.url.search),
+          cookie: ctx.cookies,
+          //     session: ctx.session
+        }),
+      );
 
-    this.registry.set("response", new Response(ctx));
+      this.registry.set("response", new Response(ctx));
 
-    await pluginEvent("onBeforeRequest", {
-      app: this.app,
-      registry: this.registry,
-      ctx,
-      config: rapinConfig,
-    });
-    console.log('preRequest after')
+      await pluginEvent("onBeforeRequest", {
+        app: this.app,
+        registry: this.registry,
+        ctx,
+        config: rapinConfig,
+      });
+    } catch (e) {
+      this.handleError(e);
+    }
+    console.log("preRequest after");
     await next();
   }
 
@@ -219,7 +223,7 @@ export default class Router {
     route: any,
   ) {
     this.registry.set("response", new Response(ctx));
-    console.log(route)
+    console.log(route);
     const result = await ctx.request.body();
     this.registry.set(
       "request",

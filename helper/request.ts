@@ -130,8 +130,8 @@ export const routes = async (registryOption: Registry) => {
       map(controllerPath.split(/\//g), (value: string) => (capitalize(value)))
         .join("");
 
-        console.log(controller)
-        console.log(controllerName)
+    console.log(controller);
+    console.log(controllerName);
 
     controller = controller[controllerName];
 
