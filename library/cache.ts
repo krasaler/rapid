@@ -11,6 +11,7 @@ export default class Cache {
     const __dirname = path.dirname(import.meta.url.replace("file:///", ""));
     const filePath = __dirname + "/cache/" + engine + ".ts";
     console.log(filePath)
+    console.log(pathToUri(filePath))
     try {
     // if (fs.existsSync(filePath)) {
       const driverClass = await import(pathToUri(filePath));
