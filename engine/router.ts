@@ -172,6 +172,7 @@ export default class Router {
   }
 
   private async preRequest(ctx: Context, next: () => Promise<void>) {
+    console.log('preRequest')
     this.registry.set("error", new Error());
 
     const result = await ctx.request.body();
@@ -208,7 +209,7 @@ export default class Router {
       ctx,
       config: rapinConfig,
     });
-
+    console.log('preRequest after')
     await next();
   }
 
@@ -218,7 +219,7 @@ export default class Router {
     route: any,
   ) {
     this.registry.set("response", new Response(ctx));
-
+    console.log(route)
     const result = await ctx.request.body();
     this.registry.set(
       "request",
