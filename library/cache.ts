@@ -10,8 +10,6 @@ export default class Cache {
     const { engine, expire } = config.cache;
     const __dirname = path.dirname(import.meta.url.replace("file:///", ""));
     let filePath = __dirname + "/cache/" + engine + ".ts";
-    console.log(filePath)
-    console.log(pathToUri(filePath))
     try {
       if(filePath.indexOf('http')===-1) {
         filePath = pathToUri(filePath)
