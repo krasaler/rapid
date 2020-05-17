@@ -27,7 +27,7 @@ export default class Loader {
 
     if (!this.registry.has("model_" + route.replace("/", "_"))) {
       let model = await import(
-        pathToUri(Deno.cwd() + "/model/" + route + ".ts")
+        pathToUri(Deno.cwd() + "/catalog/model/" + route + ".ts")
       );
 
       const modelName = "Model" +

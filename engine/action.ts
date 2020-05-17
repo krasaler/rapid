@@ -11,7 +11,7 @@ export default class Action {
     const parts = route.replace(/[^a-zA-Z0-9_\/]/, "").split("/");
 
     while (parts) {
-      const filename = "controller/" + parts.join("/") + ".ts";
+      const filename = "catalog/controller/" + parts.join("/") + ".ts";
       if (isEmpty(parts)) {
         break;
       }
@@ -33,7 +33,7 @@ export default class Action {
     let controller = registry.get(controllerName);
 
     if (!registry.has(controllerName)) {
-      controller = await import(Deno.cwd() + "controller/" + this.route);
+      controller = await import(Deno.cwd() + "catalog/controller/" + this.route);
 
       controller = controller[controllerName];
 

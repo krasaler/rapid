@@ -98,7 +98,7 @@ export const validate = (action: string) => {
 
 export const routes = async (registryOption: Registry) => {
   registry = registryOption;
-  const controllers = walkSync(Deno.cwd() + "/controller", {
+  const controllers = walkSync(Deno.cwd() + "/catalog/controller", {
     match: [path.globToRegExp(path.join(Deno.cwd(), "**", "*.ts"), {
       flags: "g",
       extended: true,
@@ -109,12 +109,12 @@ export const routes = async (registryOption: Registry) => {
   for (const value of controllers) {
     controllerPath = replace(
       value.path,
-      path.join(Deno.cwd(), "./controller/"),
+      path.join(Deno.cwd(), "./catalog/controller/"),
       "",
     );
     controllerPath = replace(controllerPath, ".ts", "");
     controllerPath = controllerPath.replace(/\\/g, "/");
-    let filePath = Deno.cwd() + "/controller/" + controllerPath + ".ts";
+    let filePath = Deno.cwd() + "/catalog/controller/" + controllerPath + ".ts";
 
     var pathName = path.resolve(filePath).replace(/\\/g, "/");
 

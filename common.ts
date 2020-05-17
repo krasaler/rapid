@@ -4,7 +4,8 @@ import { Controller as MainController } from "./engine/controller.ts";
 import { Model as MainModel } from "./engine/model.ts";
 import { load } from "https://deno.land/x/denv/mod.ts";
 
-let rapinConfig: any = {};
+let configPath = Deno.cwd() + "/rapin.config.ts";
+import {pathToUri} from './pathToUri.ts'
 
 const __dirname = path.dirname(
   new URL(
@@ -17,11 +18,10 @@ export let NODE_ENV: string = Deno.args.includes("start")
   : "development";
 await load();
 
-import rapinConfigDefault from "./rapin.config.ts";
+let rapinConfig = await import(pathToUri(configPath))
+rapinConfig = rapinConfig.default
 
-export const loadConfig = (cfg: any) => {
-  rapinConfig = cfg;
-};
+import rapinConfigDefault from "./rapin.config.ts";
 
 const { storage } = rapinConfig;
 export let isDev = NODE_ENV === "development";
